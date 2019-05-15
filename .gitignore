@@ -1,0 +1,8 @@
+node_modules
+package-lock.json
+src/components/auth/Login.js
+src/components/auth/Register.js
+src/components/layouts/Footer.js
+src/components/layouts/Landing.js
+src/components/layouts/Navbar.js
+src/img
