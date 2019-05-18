@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { loginUser } from '../../actions/authActions';
 
 class Login extends Component {
   constructor(){
     super();
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      errors: ''
     }
 
     this.onSubmit=this.onSubmit.bind(this);
     this.onChange=this.onChange.bind(this);
+  }
+
+  componentDidMount(){
+    if(this.props.auth.isAuthenticated){
+      this.props.history.push('/inbox');
+    }
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/inbox');
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChange(e) {
@@ -24,16 +45,18 @@ class Login extends Component {
       password: this.state.password
     }
 
-    console.log(loginUser)
+    this.props.loginUser(loginUser, this.props.history);
   }
 
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="landing">
         <div className="dark-overlay landing-inner">
           <main>
             <div className="login-form">
-              <form onSubmit={ this.onSubmit }>
+              <form noValidate onSubmit={ this.onSubmit }>
                 <div className="container">
                   <p>
                     Exchange
@@ -41,20 +64,18 @@ class Login extends Component {
                   </p>
                   <h1>Login</h1>
                   <hr />
+                  { errors.message && (<span className="alert">{errors.message}</span>) }
                   <div>
-                    <span className="alert"></span>
-                    <label for="email"><b>Email</b></label>
+                    <label htmlFor="email"><b>Email</b></label>
                     <input type="email" placeholder="eg: test@epic-mail.com" name="email" id="email" value={ this.state.email } onChange={ this.onChange } required aria-autocomplete="list"></input>
                   </div>
                   <div>
-                    <span className="alert"></span>
-                    <label for="psw"><b>Password</b></label>
+                    <label htmlFor="psw"><b>Password</b></label>
                     <input type="password" placeholder="********" name="password" id="password" value={this.state.password} onChange={ this.onChange } required aria-autocomplete="list"></input>
                   </div>
                   <div className="container">
-                    <span className="alert"></span>
                     <button type="submit" className="btn">LOGIN</button>
-                    <Link type="button" className="deletebtn" to="/reset-password"><nobr>RESET PASSWORD</nobr></Link>
+                    {/* <Link type="button" className="deletebtn" to="/reset-password"><nobr>RESET PASSWORD</nobr></Link> */}
                   </div>
                 </div>
               </form>
@@ -66,4 +87,15 @@ class Login extends Component {
   }
 }
 
-export default Login
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));
