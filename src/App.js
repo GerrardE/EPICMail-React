@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import Navbar from './components/layouts/Navbar';
@@ -12,6 +12,7 @@ import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import './App.css';
 import './Script';
+import PrivateRoute from './components/commons/PrivateRoute';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -40,11 +41,14 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-            <Route exact path="/" component={Landing} />
-            <div>
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </div>
+              <Route exact path="/" component={Landing} />
+              <div>
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Switch>
+                  <PrivateRoute exact path="/dashboard" />
+                </Switch>
+              </div>
             <Footer />
           </div>
         </Router>

@@ -1,3 +1,4 @@
+// Is Empty Function Credit: Brad Traversy MERN Stack Front To Back
 const isEmpty = value => (
   value === undefined
   || value === null
