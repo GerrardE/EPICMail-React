@@ -30,13 +30,13 @@ class Navbar extends Component {
       <nav className="topnav" id="topnav" >
         <Link className="navbar-brand" to="/">EPIC | Mail</Link>
         {isAuthenticated ? authLinks : guestLinks}
-      </nav >
+      </nav>
     )
   }
 }
 
 Navbar.propTypes = {
-  logooutUser: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 }
 
