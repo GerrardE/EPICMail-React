@@ -11,8 +11,8 @@ import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import './App.css';
-import './Script';
 import PrivateRoute from './components/commons/PrivateRoute';
+import Dashboard from './components/dashboard/Dashboard';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -46,8 +46,20 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Switch>
-                  <PrivateRoute exact path="/dashboard" />
+                  <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                 </Switch>
+                {/* <Switch>
+                  <PrivateRoute exact path="/groups" component={Dashboard}/>
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/sent" component={Dashboard}/>
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/create" component={Dashboard}/>
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/drafts" component={Dashboard}/>
+                </Switch> */}
               </div>
             <Footer />
           </div>

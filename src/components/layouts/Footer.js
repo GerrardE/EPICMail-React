@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <div>
       <footer className="footer">
-        <p>Copyright &copy; {new Date().getFullYear()} <Link to="/inbox">
+        <p>Copyright &copy; {new Date().getFullYear()} <Link to="/dashboard">
         <strong>EPIC Mail</strong></Link> All Rights Reserved.</p>
       </footer>
     </div>

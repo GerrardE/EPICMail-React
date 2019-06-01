@@ -10,6 +10,13 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
+  openNav() {
+    let sideNav = document.getElementById("mySidenav");
+    let main = document.getElementById("main");
+    sideNav.classList.add("sidebar");
+    main.classList.add("content");
+  }
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const authLinks = (
@@ -28,7 +35,8 @@ class Navbar extends Component {
 
     return (
       <nav className="topnav" id="topnav" >
-        <Link className="navbar-brand" to="/">EPIC | Mail</Link>
+        <span id="hamburger" onClick={this.openNav}>&#9776;</span>
+        <Link className="navbar-brand" to="/dashboard">EPIC | Mail</Link>
         {isAuthenticated ? authLinks : guestLinks}
       </nav>
     )
