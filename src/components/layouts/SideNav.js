@@ -15,7 +15,7 @@ class SideNav extends Component {
         <Link to="#" className="closebtn" onClick={this.closeNav}>&times;</Link>
         <Link to="/groups" className="">Groups</Link>
         <Link to="/dashboard" className="select">Inbox</Link>
-        <Link to="/create" className="">Create</Link>
+        <Link to="/sendmail" className="">SendMail</Link>
         <Link to="/sent" className="">Sent</Link>
         <Link to="/drafts" className="">Drafts</Link>
       </div>

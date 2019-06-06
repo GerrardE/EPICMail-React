@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUnread, getRead } from '../../actions/dashboardActions';
+import { getUnread, getRead } from '../../actions/getActions';
 import PropTypes from 'prop-types';
 import SideNav from '../layouts/SideNav';
 import { MailField } from '../commons/MailField';
@@ -38,7 +38,7 @@ class Dashboard extends Component {
     ))
 
     return (
-      <div>
+      <React.Fragment>
         <SideNav/>
         <div id="main">
           <div className="leader">
@@ -59,7 +59,7 @@ class Dashboard extends Component {
             body="First off, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
           />
         </div>
-      </div>
+      </React.Fragment>
     )
   }
 }

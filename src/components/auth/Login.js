@@ -67,7 +67,7 @@ class Login extends Component {
                   { errors.message && (<span className="alert">{errors.message}</span>) }
                   <div>
                     <label htmlFor="email"><b>Email</b></label>
-                    <input type="email" placeholder="eg: test@epic-mail.com" name="email" id="email" value={ this.state.email } onChange={ this.onChange } required aria-autocomplete="list"></input>
+                    <input type="email" placeholder="eg: test@epic-mail.com" name="email" id="email" value={ this.state.email } onChange={ this.onChange } required aria-autocomplete="list"/>
                   </div>
                   <div>
                     <label htmlFor="psw"><b>Password</b></label>
@@ -75,7 +75,6 @@ class Login extends Component {
                   </div>
                   <div className="container">
                     <button type="submit" className="btn">LOGIN</button>
-                    {/* <Link type="button" className="deletebtn" to="/reset-password"><nobr>RESET PASSWORD</nobr></Link> */}
                   </div>
                 </div>
               </form>

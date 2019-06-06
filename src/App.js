@@ -13,6 +13,8 @@ import { setCurrentUser, logoutUser } from './actions/authActions';
 import './App.css';
 import PrivateRoute from './components/commons/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
+import SendMail from './components/dashboard/SendMail';
+import Sent from './components/dashboard/Sent';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -48,17 +50,17 @@ class App extends Component {
                 <Switch>
                   <PrivateRoute exact path="/dashboard" component={Dashboard}/>
                 </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/sendmail" component={SendMail}/>
+                </Switch>
                 {/* <Switch>
-                  <PrivateRoute exact path="/groups" component={Dashboard}/>
-                </Switch>
+                  <PrivateRoute exact path="/groups" component={Groups}/>
+                </Switch> */}
                 <Switch>
-                  <PrivateRoute exact path="/sent" component={Dashboard}/>
+                  <PrivateRoute exact path="/sent" component={Sent}/>
                 </Switch>
-                <Switch>
-                  <PrivateRoute exact path="/create" component={Dashboard}/>
-                </Switch>
-                <Switch>
-                  <PrivateRoute exact path="/drafts" component={Dashboard}/>
+                {/* <Switch>
+                  <PrivateRoute exact path="/drafts" component={Drafts}/>
                 </Switch> */}
               </div>
             <Footer />

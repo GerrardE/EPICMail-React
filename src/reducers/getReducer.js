@@ -1,8 +1,9 @@
-import { DASHBOARD_LOADING, GET_UNREAD, GET_READ } from "../actions/types";
+import { DASHBOARD_LOADING, GET_UNREAD, GET_READ, GET_SENT } from "../actions/types";
 
 const initialState = {
   unread: null,
   read: null,
+  sent: null,
   loading: false
 }
 
@@ -26,6 +27,13 @@ export default (state=initialState, action) => {
         ...state,
         loading: false,
         read: action.payload
+      }
+
+    case GET_SENT:
+      return {
+        ...state,
+        loading: false,
+        sent: action.payload
       }
 
     default: return state;
