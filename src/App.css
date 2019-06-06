@@ -180,9 +180,23 @@ input[type=text], input[type=password], input[type=email] {
   font-style: italic
 }
 
+.btnActions{
+  margin: 20px;
+  float: right;
+}
+
 /* Add a hover effect for buttons */
 button:hover {
   opacity: 0.8;
+}
+
+/* Overide default button styling */
+button {
+  border-color: inherit !important;
+  background-color: inherit;
+  border-style: inherit !important;
+  border-width: none !important;
+  padding: none !important;
 }
 
 /* Extra style for the cancel button (red) */
@@ -249,7 +263,7 @@ span.psw {
 
 .container {
   background-color: #f2f2f2;
-  padding: 5px 20px 15px 20px;
+  padding: 5px 20px 65px 20px;
   border: 1px solid lightgrey;
   border-radius: 3px;
 }
@@ -582,7 +596,7 @@ input {
 }
 
 .row {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
   margin: 0 -16px;
 }

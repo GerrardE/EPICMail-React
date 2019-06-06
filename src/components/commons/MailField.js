@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ButtonLink } from '../commons/ButtonLink';
+import { ButtonLink } from './Button';
 
 export const MailField = ({ id, classType, email, createdon, title, body }) => {
   return (
@@ -12,12 +12,12 @@ export const MailField = ({ id, classType, email, createdon, title, body }) => {
       <p className="lead">{title}</p>
       <p className="para">{body}</p>
       <ButtonLink
-        btnClass="viewbtn"
-        btnName="VIEW"
+        linkClass="viewbtn"
+        linkName="VIEW"
       />
       <ButtonLink
-        btnClass="deletebtn"
-        btnName="DELETE"
+        linkClass="deletebtn"
+        linkName="DELETE"
       />
     </div>
   )

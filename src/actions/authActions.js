@@ -5,8 +5,9 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
-  axios.post(`${process.env.DB_HOST}/auth/signup`, userData)
-    .then(res => history.push('/login'))
+  axios
+    .post(`${process.env.DB_HOST}/auth/signup`, userData)
+    .then(() => history.push('/login'))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -31,6 +32,7 @@ export const loginUser = (loginData, history) => dispatch => {
 
       // Set current user
       dispatch(setCurrentUser(decoded));
+      history.push('/dashboard')
     })
     .catch(err => {
       dispatch({
