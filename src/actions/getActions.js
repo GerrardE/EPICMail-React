@@ -1,4 +1,4 @@
-import { DASHBOARD_LOADING, GET_ERRORS, GET_UNREAD, GET_READ } from "./types";
+import { DASHBOARD_LOADING, GET_ERRORS, GET_UNREAD, GET_READ, GET_SENT } from "./types";
 import axios from "axios";
 
 // Set dashboard loading
@@ -30,6 +30,21 @@ export const getRead = () => dispatch => {
     .then((res) =>
       dispatch({
         type: GET_READ,
+        payload: res.data
+      }))
+    .catch((err) =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: {}
+      }))
+}
+
+// Get sent mails
+export const getSent = () => dispatch => {
+  axios.get(`${process.env.DB_HOST}/messages/sent`)
+    .then((res) =>
+      dispatch({
+        type: GET_SENT,
         payload: res.data
       }))
     .catch((err) =>
