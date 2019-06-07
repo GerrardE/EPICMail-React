@@ -15,6 +15,7 @@ import PrivateRoute from './components/commons/PrivateRoute';
 import Dashboard from './components/dashboard/Dashboard';
 import SendMail from './components/dashboard/SendMail';
 import Sent from './components/dashboard/Sent';
+import Drafts from './components/dashboard/Drafts';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -59,9 +60,9 @@ class App extends Component {
                 <Switch>
                   <PrivateRoute exact path="/sent" component={Sent}/>
                 </Switch>
-                {/* <Switch>
+                <Switch>
                   <PrivateRoute exact path="/drafts" component={Drafts}/>
-                </Switch> */}
+                </Switch>
               </div>
             <Footer />
           </div>

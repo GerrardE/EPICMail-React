@@ -4,4 +4,4 @@ export const DASHBOARD_LOADING = 'DASHBOARD_LOADING';
 export const GET_UNREAD = 'GET_UNREAD';
 export const GET_READ = 'GET_READ';
 export const GET_SENT = 'GET_SENT';
-export const SENT_MAIL = 'SENT_MAIL';
+export const GET_DRAFTS = 'GET_DRAFTS';
