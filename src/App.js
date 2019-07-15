@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import jwt_decode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Landing from './components/layouts/Landing';
@@ -12,10 +12,10 @@ import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import './App.css';
 import PrivateRoute from './components/commons/PrivateRoute';
-import Dashboard from './components/dashboard/Dashboard';
 import SendMail from './components/dashboard/SendMail';
 import Sent from './components/dashboard/Sent';
 import Drafts from './components/dashboard/Drafts';
+import Inbox from './components/dashboard/Inbox';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -23,7 +23,7 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
 
   // Decode token and get user info/token expiration
-  const decoded = jwt_decode(localStorage.jwtToken);
+  const decoded = jwtDecode(localStorage.jwtToken);
 
   // Set the current user(call the setCurrentUser Action & also set isAuthenticated)
   store.dispatch(setCurrentUser(decoded));
@@ -44,26 +44,17 @@ class App extends Component {
         <Router>
           <div className="App">
             <Navbar />
-              <Route exact path="/" component={Landing} />
-              <div>
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <Switch>
-                  <PrivateRoute exact path="/dashboard" component={Dashboard}/>
-                </Switch>
-                <Switch>
-                  <PrivateRoute exact path="/sendmail" component={SendMail}/>
-                </Switch>
-                {/* <Switch>
-                  <PrivateRoute exact path="/groups" component={Groups}/>
-                </Switch> */}
-                <Switch>
-                  <PrivateRoute exact path="/sent" component={Sent}/>
-                </Switch>
-                <Switch>
-                  <PrivateRoute exact path="/drafts" component={Drafts}/>
-                </Switch>
-              </div>
+            <Route exact path="/" component={Landing}/>
+            <div>
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Switch>
+                <PrivateRoute exact path="/inbox" component={Inbox} />
+                <PrivateRoute exact path="/sendmail" component={SendMail} />
+                <PrivateRoute exact path="/sent" component={Sent} />>
+                <PrivateRoute exact path="/drafts" component={Drafts} />
+              </Switch>
+            </div>
             <Footer />
           </div>
         </Router>

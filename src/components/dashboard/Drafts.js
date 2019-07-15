@@ -1,39 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getDrafts } from '../../actions/getActions';
 import PropTypes from 'prop-types';
+import { getDrafts } from '../../actions/getActions';
 import SideNav from '../layouts/SideNav';
-import { MailField } from '../commons/MailField';
+import MailField from '../commons/MailField';
+import Loader from '../commons/Loading';
 
-class Drafts extends Component {
-  componentDidMount = () => {
+export class Drafts extends Component {
+  componentDidMount() {
     const { getDrafts } = this.props;
     getDrafts();
   }
 
   render() {
-    console.log(this.props)
-    const { dashboard: { drafts } } = this.props;
-    let draftMails;
+    const { loading, dashboard: { draft } } = this.props;
+    let draftMails, dashboardContent;
 
-    draftMails = drafts && drafts.retrievedMessages.map((draftMail) => (
+    draftMails = draft && draft.retrievedMessages.map((draftMail) => (
       <MailField
-        key={draftMails.id}
+        key={draftMail.id}
         classType="container-chat darker"
-        email={draftMails.email}
-        createdon={draftMails.createdon}
-        body={draftMails.subject}
+        email={draftMail.email}
+        createdon={draftMail.createdon}
+        body={draftMail.subject}
       />
     ))
 
-    return (
-      <>
-        <SideNav />
+    if (draft === null || loading) {
+      dashboardContent = <Loader />
+    } else {
+      dashboardContent =
         <div id="main">
           <div className="leader">
             <h2 className="lead-title">Drafts</h2>
-            <p>Welcome!</p>
+            <p></p>
           </div>
           <div id="draftmails">
             {draftMails}
@@ -45,14 +46,20 @@ class Drafts extends Component {
             body="First off, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
           />
         </div>
-      </>
+    }
+
+    return (
+      <Fragment>
+        <SideNav />
+        {dashboardContent}
+      </Fragment>
     )
   }
 }
 
 Drafts.propTypes = {
   getDrafts: PropTypes.func.isRequired,
-  drafts: PropTypes.object
+  draft: PropTypes.object
 }
 
 

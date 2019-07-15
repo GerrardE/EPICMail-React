@@ -1,9 +1,10 @@
 # EPICMail-React
+[![Build Status](https://travis-ci.org/GerrardE/EPICMail-React.svg?branch=develop)](https://travis-ci.org/GerrardE/EPICMail-React) [![Coverage Status](https://coveralls.io/repos/github/GerrardE/EPICMail-React/badge.svg?branch=develop)](https://coveralls.io/github/GerrardE/EPICMail-React?branch=develop)
 
 ## Description
 EPIC-Mail Front End Application with React.js
 
-**_This App is Live on_** https://epic-mail-react.herokuapp.com/
+**_This App is Live at_** https://epic-mail-react.herokuapp.com/
 
 ## Features
 Below are the features of EPIC-Mail at this point
@@ -12,9 +13,8 @@ Below are the features of EPIC-Mail at this point
 - Users can signup <br>
 - Users can login <br>
 - Users can send a message to individuals<br>
-- Users can view their inbox and read messages<br>
-- Users can retract sent messages<br>
-- Users can save an email as draft and send it later or delete it<br>
+- Users can view their inbox and draft messages<br>
+- Users can save an email as draft<br>
   <br/>
 
 
@@ -32,7 +32,7 @@ cd EPICMail-React
 npm install
 ```
 
-6. Run "npm start" to start the app
+6. Run "npm run start:dev" to start the app
 
 8. Run "npm test" to test application
 

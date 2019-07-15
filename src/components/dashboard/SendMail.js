@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SideNav from '../layouts/SideNav';
 import { Button } from '../commons/Button';
-import { postMail } from '../../actions/sendActions';
+import postMail from '../../actions/sendActions';
 
-class SendMail extends Component {
+export class SendMail extends Component {
   constructor(props) {
     super(props);
 
@@ -17,21 +17,17 @@ class SendMail extends Component {
       status: '',
       errors: ''
     }
-
-    this.onClick = this.onClick.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onClick = (e) => {
-    if(e.target.name === 'draft') {
+    if (e.target.name === 'draft') {
       this.setState({ status: e.target.name })
     } else if (e.target.name === 'sent') {
       this.setState({ status: e.target.name })
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if (nextProps) {
       this.setState({ errors: nextProps.errors });
     }
@@ -45,20 +41,30 @@ class SendMail extends Component {
     e.preventDefault();
     const { toEmail, subject, message, status } = this.state;
     const newEmail = { subject, message, toEmail, status };
-    
-    this.props.postMail(newEmail, this.props.history)
+
+    this.props.postMail(newEmail, this.props.history);
+    this.clearInput();
   }
 
+  clearInput = () => {
+    this.setState ({
+      toEmail: '',
+      subject: '',
+      message: '',
+      status: '',
+      errors: ''
+    })
+  }
 
   render() {
     const { errors } = this.state;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <SideNav />
         <div id="main" className="">
           <h2 className="lead-title">Create Message</h2>
-          <p>Welcome!</p>
+          <br></br>
           <div className="container">
             <form noValidate onSubmit={this.onSubmit}>
               <div className="row">
@@ -88,14 +94,14 @@ class SendMail extends Component {
               </div>
               <div className="row">
                 <span className="btnActions">
-                  <Button btnClass="editbtn" btnName="SAVE" name="draft" onClick={this.onClick} type="submit"/>
-                  <Button btnClass="viewbtn" btnName="SEND" name="sent" onClick={this.onClick} type="submit"/>
+                  <Button btnClass="editbtn" btnName="SAVE" name="draft" onClick={this.onClick} type="submit" />
+                  <Button btnClass="viewbtn" btnName="SEND" name="sent" onClick={this.onClick} type="submit" />
                 </span>
               </div>
             </form>
           </div>
         </div>
-      </React.Fragment>
+      </Fragment>
     )
   }
 }
