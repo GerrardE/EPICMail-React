@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { registerUser } from '../../actions/authActions';
 import { withRouter } from 'react-router-dom';
+import { registerUser } from '../../actions/authActions';
 
 class Register extends Component {
   constructor() {
@@ -13,15 +13,15 @@ class Register extends Component {
       email: '',
       password: '',
       errors: ''
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  
+
   componentDidMount() {
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
+      this.props.history.push('/inbox');
     }
   }
 
@@ -34,7 +34,7 @@ class Register extends Component {
   onChange(e) {
     this.setState({
       [e.target.name]: e.target.value
-    })
+    });
   }
 
   onSubmit(e) {
@@ -44,7 +44,7 @@ class Register extends Component {
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password
-    }
+    };
 
     this.props.registerUser(newUser, this.props.history);
   }
@@ -62,10 +62,11 @@ class Register extends Component {
                   <p>
                     Exchange
                     messages over the internet.
-                  </p><br />
+                  </p>
+                  <br/>
                   <h1>Register Here</h1>
                   <hr />
-                  {errors.message && (<span className="alert">{ errors.message }</span>)}
+                  {errors.message && (<span className="alert">{errors.message}</span>)}
                   <div>
                     <input type="text" placeholder="First Name" name="firstName" id="firstName" aria-autocomplete="list" value={this.state.firstName} onChange={this.onChange} required />
                   </div>
@@ -84,7 +85,6 @@ class Register extends Component {
 
                   <div className="clearfix">
                     <button type="submit" className="btn" id="signup">Sign Up</button>
-                    <div className="loader."></div>
                   </div>
                 </div>
               </form>
@@ -92,7 +92,7 @@ class Register extends Component {
           </main>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -100,11 +100,11 @@ Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
-}
+};
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
-})
+});
 
-export default connect(mapStateToProps, { registerUser })(withRouter (Register));
+export default connect(mapStateToProps, { registerUser })(withRouter(Register));

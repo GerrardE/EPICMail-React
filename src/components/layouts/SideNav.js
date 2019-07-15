@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
-class SideNav extends Component {
-  closeNav() {
-    const sideNav = document.getElementById("mySidenav");
-    const main = document.getElementById("main");
-    sideNav.classList.remove("sidebar");
-    main.classList.remove("content");
+export class SideNav extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
+  closeNav = () => {
+    const sideNav = document.getElementById('mySidenav');
+    const main = document.getElementById('main');
+    sideNav.classList.remove('sidebar');
+    main.classList.remove('content');
   }
 
   render() {
     return (
       <div id="mySidenav" className="sidenav">
-        <Link to="#" className="closebtn" onClick={this.closeNav}>&times;</Link>
-        <Link to="/groups" className="">Groups</Link>
-        <Link to="/dashboard" className="select">Inbox</Link>
-        <Link to="/sendmail" className="">SendMail</Link>
-        <Link to="/sent" className="">Sent</Link>
-        <Link to="/drafts" className="">Drafts</Link>
+        <NavLink to="#" className="closebtn" onClick={this.closeNav}>&times;</NavLink>
+        <NavLink to="#" activeClassName="select">Groups</NavLink>
+        <NavLink to="/inbox" activeClassName="select">Inbox</NavLink>
+        <NavLink to="/sendmail" activeClassName="select">SendMail</NavLink>
+        <NavLink to="/sent" activeClassName="select">Sent</NavLink>
+        <NavLink to="/drafts" activeClassName="select">Drafts</NavLink>
       </div>
-    )
+      );
+    }
   }
-}
-
-export default SideNav;
+  
+  export default SideNav;

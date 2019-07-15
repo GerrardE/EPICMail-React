@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUnread, getRead } from '../../actions/getActions';
 import PropTypes from 'prop-types';
+import { getUnread, getRead } from '../../actions/getActions';
 import SideNav from '../layouts/SideNav';
-import { MailField } from '../commons/MailField';
+import MailField from '../commons/MailField';
 
-class Dashboard extends Component {
+export class Inbox extends Component {
   componentDidMount() {
-    const { getRead, getUnread } = this.props
+    const { getRead, getUnread } = this.props;
     getRead();
     getUnread();
   }
@@ -21,29 +21,28 @@ class Dashboard extends Component {
       <MailField
         key={unreadMail.id}
         classType="container-chat"
-        email={unreadMail.email}
+        email={unreadMail.fromemail}
         createdon={unreadMail.createdon}
         body={unreadMail.subject}
       />
-    ))
+    ));
 
     readMails = read && read.retrievedMessages.map(readMail => (
       <MailField
         key={readMail.id}
         classType="container-chat darker"
-        email={readMail.email}
+        email={readMail.fromemail}
         createdon={readMail.createdon}
         body={readMail.subject}
       />
-    ))
+    ));
 
     return (
-      <React.Fragment>
-        <SideNav/>
+      <Fragment>
+        <SideNav />
         <div id="main">
           <div className="leader">
             <h2 className="lead-title">Inbox</h2>
-            <p>Welcome!</p>
           </div>
           <div id="unread">
             {unreadMails}
@@ -56,24 +55,24 @@ class Dashboard extends Component {
             classType="container-chat darker-new"
             email="EPICMail Team"
             title="Welcome!"
-            body="First off, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
+            body="First of, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
           />
         </div>
-      </React.Fragment>
-    )
+      </Fragment>
+    );
   }
 }
 
-Dashboard.propTypes = {
+Inbox.propTypes = {
   getRead: PropTypes.func.isRequired,
   getUnread: PropTypes.func.isRequired,
-  dashboard: PropTypes.object,
-}
+  dashboard: PropTypes.object.isRequired,
+};
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   dashboard: state.dashboard,
   auth: state.auth,
-})
+});
 
-export default connect(mapStateToProps, { getUnread, getRead })(withRouter(Dashboard));
+export default connect(mapStateToProps, { getUnread, getRead })(withRouter(Inbox));
