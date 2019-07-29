@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.config.js --open",
-    "build": "NODE_ENV=production && webpack --config webpack.config.js",
-    "heroku-postbuild": "npm run clean && npm run build",
+    "build": "NODE_ENV=production npm run clean && webpack --config webpack.config.js",
+    "heroku-postbuild": "npm run build",
     "clean": "rm -rf dist",
     "test": "jest --coverage",
     "test:dev": "jest --coverage && coverage",
@@ -39,6 +39,7 @@
     "axios": "^0.18.1",
     "babel-loader": "^8.0.6",
     "classnames": "^2.2.6",
+    "coveralls": "^3.0.5",
     "css-loader": "^2.1.1",
     "dotenv-webpack": "^1.7.0",
     "file-loader": "^4.0.0",
