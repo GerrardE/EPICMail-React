@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start:dev": "NODE_ENV=development webpack-dev-server --config webpack.config.js --open",
-    "build": "NODE_ENV=production npm run clean && webpack --config webpack.config.js",
-    "heroku-postbuild": "npm run build",
+    "build": "NODE_ENV=production && webpack --config webpack.config.js",
+    "heroku-postbuild": "npm run clean && npm run build",
     "clean": "rm -rf dist",
     "test": "jest --coverage",
     "test:dev": "jest --coverage && coverage",
