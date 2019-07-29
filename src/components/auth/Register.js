@@ -3,20 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { registerUser } from '../../actions/authActions';
+import emailRegex from '../../validations/helpers';
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: '',
       lastName: '',
       email: '',
       password: '',
-      errors: ''
+      confirmPassword: '',
+      errors: {}
     };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -31,20 +30,61 @@ class Register extends Component {
     }
   }
 
-  onChange(e) {
+  onChange = (e) => {
+    const { password, errors } = this.state;
+    const { name, value } = e.target;
+    const trimVal = value.trim();
+
+    switch (name) {
+      case "firstName":
+        errors.firstName =
+          (trimVal.length < 3 && trimVal.length > 0) || trimVal.length === 0
+            ? "A minimum of 3 and maximum of 30 characters is required"
+            : "";
+        break;
+      case "lastName":
+        errors.lastName =
+          (trimVal.length < 3 && trimVal.length > 0) || trimVal.length === 0
+            ? "A minimum of 3 characters is required"
+            : "";
+        break;
+      case "email":
+        errors.email =
+          emailRegex.test(trimVal) && trimVal.length > 0
+            ? ""
+            : "Invalid email address";
+        break;
+      case "password":
+        errors.password =
+          (trimVal.length < 6 && trimVal.length > 0) || trimVal.length === 0
+            ? "A minimum of 6 characters is required"
+            : "";
+        break;
+      case "confirmPassword":
+        errors.confirmPassword =
+          password !== trimVal || trimVal.length === 0
+            ? "Passwords must match"
+            : "";
+        break;
+    }
+
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      errors
     });
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      password: this.state.password
-    };
+    const { firstName, lastName, email, password, errors } = this.state;
+    if (firstName === "" || lastName === "" ||
+      email === "" || password === ""
+    ) return;
+
+    const { firstName: firstname, lastName: lastname, email: mail, password: pass } = errors;
+    if (firstname !== "" || lastname !== "" || mail !== "" || pass !== "") return;
+
+    const newUser = { firstName, lastName, email, password };
 
     this.props.registerUser(newUser, this.props.history);
   }
@@ -57,34 +97,36 @@ class Register extends Component {
         <div className="dark-overlay landing-inner">
           <main>
             <section className="login-form">
-              <form noValidate onSubmit={this.onSubmit}>
+              <form>
                 <div className="container">
                   <p>
                     Exchange
                     messages over the internet.
                   </p>
-                  <br/>
-                  <h1>Register Here</h1>
-                  <hr />
-                  {errors.message && (<span className="alert">{errors.message}</span>)}
-                  <div>
-                    <input type="text" placeholder="First Name" name="firstName" id="firstName" aria-autocomplete="list" value={this.state.firstName} onChange={this.onChange} required />
-                  </div>
+                  <h1>Sign up</h1>
 
                   <div>
-                    <input type="text" placeholder="Last Name" name="lastName" id="lastName" aria-autocomplete="list" value={this.state.lastName} onChange={this.onChange} required />
+                    {errors.firstName && (<span className="alert">{errors.firstName}</span>)}
+                    <input type="text" placeholder="First Name" name="firstName" id="firstName" aria-autocomplete="list" value={this.state.firstName} onChange={this.onChange} />
                   </div>
-
                   <div>
-                    <input type="email" placeholder="Enter Email" name="email" id="email" aria-autocomplete="list" value={this.state.email} onChange={this.onChange} required />
+                    {errors.lastName && (<span className="alert">{errors.lastName}</span>)}
+                    <input type="text" placeholder="Last Name" name="lastName" id="lastName" aria-autocomplete="list" value={this.state.lastName} onChange={this.onChange} />
                   </div>
-
                   <div>
-                    <input type="password" placeholder="Enter Password" name="password" id="password" value={this.state.password} onChange={this.onChange} required />
+                    {errors.email && (<span className="alert">{errors.email}</span>)}
+                    <input type="email" placeholder="Email e.g: user@epic-mail.com" name="email" id="email" aria-autocomplete="list" value={this.state.email} onChange={this.onChange} />
                   </div>
-
+                  <div>
+                    {errors.password && (<span className="alert">{errors.password}</span>)}
+                    <input type="password" placeholder="Enter Password" name="password" value={this.state.password} onChange={this.onChange} />
+                  </div>
+                  <div>
+                    {errors.confirmPassword && (<span className="alert">{errors.confirmPassword}</span>)}
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.onChange} />
+                  </div>
                   <div className="clearfix">
-                    <button type="submit" className="btn" id="signup">Sign Up</button>
+                    <button className="btn" onClick={this.onSubmit}>Sign Up</button>
                   </div>
                 </div>
               </form>

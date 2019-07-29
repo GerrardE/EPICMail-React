@@ -11,7 +11,7 @@ body{
 
 .landing {
   position: relative;
-  background: url("/src/img/bg-image.jpg");
+  background: url("./img/bg-image.jpg");
   background-size: cover;
   background-position: center;
   height: 100vh;

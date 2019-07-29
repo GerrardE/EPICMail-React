@@ -1,19 +1,22 @@
 import axios from 'axios';
-import { GET_ERRORS, POST_MAIL } from './types';
+import { POST_MAIL_SUCCESS, POST_MAIL_ERROR } from './types';
+import { toast } from 'react-toastify';
 
-const postMail = (newEmail, history) => (dispatch) => {
-  axios
-    .post(`${process.env.DB_HOST}/messages`, newEmail)
-    .then((res) => dispatch({
-      type: POST_MAIL,
+const postMail = (newEmail) => async (dispatch) => {
+  try {
+    const res = await axios.post('/messages', newEmail)
+    dispatch({
+      type: POST_MAIL_SUCCESS,
       payload: res.data
-    }))
-    .catch((err) => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+    })
+    toast.success('Success')
+  } catch (err) {
+    dispatch({
+      type: POST_MAIL_ERROR,
+      payload: err.response.data.message
     });
+    toast.error(err.response.data.message)
+  }
 };
 
 export default postMail;

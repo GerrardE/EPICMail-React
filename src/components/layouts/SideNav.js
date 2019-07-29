@@ -18,7 +18,6 @@ export class SideNav extends Component {
     return (
       <div id="mySidenav" className="sidenav">
         <NavLink to="#" className="closebtn" onClick={this.closeNav}>&times;</NavLink>
-        <NavLink to="#" activeClassName="select">Groups</NavLink>
         <NavLink to="/inbox" activeClassName="select">Inbox</NavLink>
         <NavLink to="/sendmail" activeClassName="select">SendMail</NavLink>
         <NavLink to="/sent" activeClassName="select">Sent</NavLink>

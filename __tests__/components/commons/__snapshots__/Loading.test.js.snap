@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Loading /> should render the Loading component properly 1`] = `
+<div
+  className="middle"
+>
+  <h5
+    className="lead-title"
+  >
+    Loading ...
+  </h5>
+  <img
+    alt="loading..."
+    className="loader"
+    src={
+      Object {
+        "process": [Function],
+      }
+    }
+  />
+</div>
+`;
