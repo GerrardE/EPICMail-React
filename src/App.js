@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Landing from './components/layouts/Landing';
@@ -16,6 +18,7 @@ import SendMail from './components/dashboard/SendMail';
 import Sent from './components/dashboard/Sent';
 import Drafts from './components/dashboard/Drafts';
 import Inbox from './components/dashboard/Inbox';
+import NotFound from './components/layouts/NotFound';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -40,25 +43,25 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
+      <Fragment>
+        <ToastContainer position="top-right" />
+        <Provider store={store}>
+          <Router>
             <Navbar />
-            <Route exact path="/" component={Landing}/>
-            <div>
+            <Switch>
+              <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Switch>
-                <PrivateRoute exact path="/inbox" component={Inbox} />
-                <PrivateRoute exact path="/sendmail" component={SendMail} />
-                <PrivateRoute exact path="/sent" component={Sent} />>
-                <PrivateRoute exact path="/drafts" component={Drafts} />
-              </Switch>
-            </div>
+              <PrivateRoute exact path="/inbox" component={Inbox} />
+              <PrivateRoute exact path="/sendmail" component={SendMail} />
+              <PrivateRoute exact path="/sent" component={Sent} />
+              <PrivateRoute exact path="/drafts" component={Drafts} />
+              <Route path="*" component={NotFound} />
+            </Switch>
             <Footer />
-          </div>
-        </Router>
-      </Provider>
+          </Router>
+        </Provider>
+      </Fragment>
     );
   }
 }

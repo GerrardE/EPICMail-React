@@ -2,25 +2,17 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import emailRegex from '../../validations/helpers';
 import { loginUser } from '../../actions/authActions';
-import Loading from '../commons/Loading';
-/**
- *
- *
- * @class Login
- * @extends {Component}
- */
+
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
-      errors: ''
+      errors: {}
     };
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -33,59 +25,76 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push('/inbox');
     }
+  }
 
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+  onChange = (e) => {
+    const { errors } = this.state;
+    const { name, value } = e.target;
+    const trimVal = value.trim();
+
+    switch (name) {
+      case "email":
+        errors.email =
+          emailRegex.test(trimVal) && trimVal.length > 0
+            ? ""
+            : "Invalid email address";
+        break;
+      case "password":
+        errors.password =
+          (trimVal.length < 6 && trimVal.length > 0) || trimVal.length === 0
+            ? "A minimum of 6 characters is required"
+            : "";
+        break;
     }
+
+    this.setState({
+      [e.target.name]: e.target.value,
+      errors
+    });
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
-    const loginUser = {
-      email: this.state.email,
-      password: this.state.password
-    };
+    const { email, password, errors } = this.state;
+
+    if (email === "" || password === "") return;
+
+    const { email: mail, password: pass } = errors;
+    if (mail !== "" || pass !== "") return;
+
+    const loginUser = { email, password };
 
     this.props.loginUser(loginUser, this.props.history);
   }
 
   render() {
-    const { errors, auth: { loading, isAuthenticated } } = this.props;
-    let setLoading;
-
-    if (isAuthenticated === false && loading) {
-      setLoading = <Loading/>;
-    } else {
-      setLoading = <button type="submit" className="btn"> LOGIN</button>;
-    }
+    const { errors, email, password } = this.state;
 
     return (
       <div className="landing">
         <div className="dark-overlay landing-inner">
           <main>
             <div className="login-form">
-              <form noValidate onSubmit={this.onSubmit}>
+              <form onSubmit={this.onSubmit}>
                 <div className="container">
                   <p>
                     Exchange
                     messages over the internet.
                   </p>
-                  <h1>Login</h1>
-                  {errors.message && (<span className="alert">{errors.message}</span>)}
+                  <h1>Sign in</h1>
+
                   <div>
                     <label htmlFor="email"><b>Email</b></label>
-                    <input type="email" placeholder="eg: test@epic-mail.com" name="email" id="email" value={this.state.email} onChange={this.onChange} required aria-autocomplete="list" />
-                  </div><br/>
+                    {errors.email && (<span className="alert">{errors.email}</span>)}
+                    <input type="email" placeholder="eg: user@epic-mail.com" name="email" value={email} onChange={this.onChange} aria-autocomplete="list" />
+                  </div><br />
                   <div>
                     <label htmlFor="psw"><b>Password</b></label>
-                    <input type="password" placeholder="********" name="password" id="password" value={this.state.password} onChange={this.onChange} required aria-autocomplete="list" />
+                    {errors.password && (<span className="alert">{errors.password}</span>)}
+                    <input type="password" placeholder="********" name="password" value={password} onChange={this.onChange} aria-autocomplete="list" />
                   </div>
                   <div>
-                    {setLoading}
+                    <button type="submit" className="btn">LOGIN</button>
                   </div>
                 </div>
               </form>

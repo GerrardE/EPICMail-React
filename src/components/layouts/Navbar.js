@@ -37,8 +37,8 @@ export class Navbar extends Component {
 
     const guestLinks = (
       <nav className="topnav" id="topnav">
-        <NavLink to="/register" activeClassName="active"> Sign Up</NavLink>
-        <NavLink to="/login" activeClassName="active">Login</NavLink>
+        <NavLink to="/register" activeClassName="active">Sign Up</NavLink>
+        <NavLink to="/login" activeClassName="active">Sign In</NavLink>
       </nav>
     );
 
@@ -46,7 +46,7 @@ export class Navbar extends Component {
       <nav className="topnav" id="topnav">
         {isAuthenticated
           ? <span id="hamburger" onClick={this.openNav}>&#9776;</span> : ''}
-        <NavLink className="navbar-brand" to="/dashboard">EPIC | Mail</NavLink>
+        <NavLink className="navbar-brand" to="/">EPIC | Mail</NavLink>
         {isAuthenticated ? authLinks : guestLinks}
       </nav>
     );

@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getDrafts } from '../../actions/getActions';
 import SideNav from '../layouts/SideNav';
 import MailField from '../commons/MailField';
-import Loader from '../commons/Loading';
 
 export class Drafts extends Component {
   componentDidMount() {
@@ -14,8 +13,8 @@ export class Drafts extends Component {
   }
 
   render() {
-    const { loading, dashboard: { draft } } = this.props;
-    let draftMails, dashboardContent;
+    const { dashboard: { draft } } = this.props;
+    let draftMails;
 
     draftMails = draft && draft.retrievedMessages.map((draftMail) => (
       <MailField
@@ -27,32 +26,20 @@ export class Drafts extends Component {
       />
     ))
 
-    if (draft === null || loading) {
-      dashboardContent = <Loader />
-    } else {
-      dashboardContent =
-        <div id="main">
-          <div className="leader">
-            <h2 className="lead-title">Drafts</h2>
-            <p></p>
-          </div>
-          <div id="draftmails">
-            {draftMails}
-          </div>
+    return (
+      <div id="main">
+        <SideNav />
+        <div className="leader">
+          <h2 className="lead-title">Drafts</h2>
+          <p></p>
+        </div>
+        <div id="draftmails">
+          {draftMails}
           <MailField
-            classType="container-chat darker-new"
-            email="EPICMail Team"
-            title="Welcome!"
-            body="First off, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
+            body='First off, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. You would find all your draft messages here.'
           />
         </div>
-    }
-
-    return (
-      <Fragment>
-        <SideNav />
-        {dashboardContent}
-      </Fragment>
+      </div>
     )
   }
 }

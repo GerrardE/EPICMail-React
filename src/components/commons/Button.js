@@ -25,6 +25,6 @@ Button.propTypes = {
   btnName: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.number,
   onClick: PropTypes.func
 };

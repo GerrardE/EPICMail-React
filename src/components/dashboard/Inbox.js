@@ -52,9 +52,6 @@ export class Inbox extends Component {
           </div>
 
           <MailField
-            classType="container-chat darker-new"
-            email="EPICMail Team"
-            title="Welcome!"
             body="First of, welcome. And thanks for agreeing to use EPICMail. By now you probably know the key ways in which EPICMail differs from traditional webmail services. Cheers!"
           />
         </div>

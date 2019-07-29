@@ -1,5 +1,5 @@
-import { SET_CURRENT_USER, LOADING } from '../actions/types';
-import isEmpty from '../validation/isEmpty';
+import { SET_CURRENT_USER, LOADING, REGISTER_USER_SUCCESS, LOGIN_USER_SUCCESS } from '../actions/types';
+import isEmpty from '../validations/isEmpty';
 
 // The Auth Reducer
 
@@ -20,6 +20,18 @@ export default function (state = initialState, action) {
       };
 
     case LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case LOGIN_USER_SUCCESS:
       return {
         ...state,
         loading: true,

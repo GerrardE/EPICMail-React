@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/index.jsx',
@@ -18,14 +17,18 @@ module.exports = {
       ignored: /node_modules/
     },
     host: 'localhost',
-    port: 5000,
-    proxy: {
-      '/api/v1/*': {
-        target: 'http://localhost:3000/',
-        secure: false,
-        changeOrigin: true,
-      },
-    },
+    port: 5000
+  },
+  resolve: {
+    extensions: ['.jsx', '.js'],
+    alias: {
+      '@actions': path.resolve(__dirname, './src/actions'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@reducers': path.resolve(__dirname, './src/reducers'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@validations': path.resolve(__dirname, './src/validations'),
+      '@base': path.resolve(__dirname, './public')
+    }
   },
   module: {
     rules: [
@@ -54,7 +57,6 @@ module.exports = {
       path: path.join(__dirname, './dist'),
       filename: 'index.html',
     }),
-    new webpack.HotModuleReplacementPlugin({}),
-    new Dotenv()
+    new webpack.HotModuleReplacementPlugin({})
   ]
 }

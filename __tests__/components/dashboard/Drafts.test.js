@@ -21,4 +21,9 @@ describe('<Drafts/>', () => {
     const mailfield = wrapper.find('MailField');
     expect(mailfield).toHaveLength(1);
   });
+
+  test('It has the <SideNav/> component', () => {
+    const sidenav = wrapper.find('SideNav');
+    expect(sidenav).toHaveLength(1);
+  });
 });
