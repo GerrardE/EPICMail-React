@@ -5,8 +5,7 @@ import { SET_CURRENT_USER, LOADING, REGISTER_USER_SUCCESS, LOGIN_USER_ERROR, LOG
 import setAuthToken from '../utils/setAuthToken';
 
 axios.defaults.baseURL =
-  // 'https://epic-m.herokuapp.com/api/v2';
-  'http://localhost:3000/api/v2';
+  'https://epic-m.herokuapp.com/api/v2';
 
 
 export const setLoading = () => ({
