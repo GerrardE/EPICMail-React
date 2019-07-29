@@ -10,7 +10,7 @@
     "clean": "rm -rf dist",
     "test": "jest --coverage",
     "test:dev": "jest --coverage && coverage",
-    "coveralls": "jest --colors --coverage && cat ./coverage/lcov.info | coveralls",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "test:watch": "jest --coverage --watch"
   },
   "repository": {
